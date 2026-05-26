@@ -1,0 +1,1319 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<title>Costos de Envío Moto - Formulario Entregador</title>
+<style>
+  :root {
+    --bg1:#07305c;
+    --bg2:#075dcc;
+    --card:#ffffff;
+    --text:#101828;
+    --muted:#667085;
+    --primary:#0b64d8;
+    --primary2:#0050b8;
+    --green:#16a34a;
+    --line:#e5e7eb;
+    --shadow:0 22px 55px rgba(0,0,0,.28);
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0;
+    min-height:100vh;
+    font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
+    background:radial-gradient(circle at 22% 10%, rgba(255,255,255,.16), transparent 30%), linear-gradient(135deg,var(--bg1),var(--bg2));
+    color:#fff;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:16px;
+  }
+  .app{width:100%;max-width:640px}
+  .brand{text-align:center;margin-bottom:14px}
+  .brand h1{font-size:26px;margin:0 0 5px;font-weight:950;letter-spacing:.2px}
+  .brand p{margin:0;color:rgba(255,255,255,.86);font-size:14px}
+  .card{
+    background:var(--card);
+    color:var(--text);
+    border-radius:28px;
+    box-shadow:var(--shadow);
+    padding:22px;
+    border:1px solid rgba(255,255,255,.32);
+  }
+  .top{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:14px}
+  .pill{
+    background:#eef4ff;color:#0849a8;border:1px solid #c7d7fe;
+    border-radius:999px;padding:8px 12px;font-size:14px;font-weight:900;white-space:nowrap;
+  }
+  .save{font-size:12px;color:var(--muted);text-align:right}
+  .bar{height:12px;background:#e5e7eb;border-radius:999px;overflow:hidden;margin-bottom:18px}
+  .bar div{height:100%;width:0%;background:linear-gradient(90deg,#22c55e,#0b64d8);border-radius:999px;transition:width .25s ease}
+  .section-label{font-size:13px;font-weight:900;color:#475467;margin-bottom:7px;text-transform:uppercase;letter-spacing:.3px}
+  .address{
+    display:block;
+    width:100%;
+    font-size:24px;
+    line-height:1.25;
+    font-weight:950;
+    color:#0f172a;
+    margin:0 0 20px;
+    padding:18px;
+    border-radius:22px;
+    background:#f8fafc;
+    border:2px solid #dbe4f0;
+    min-height:72px;
+    overflow-wrap:anywhere;
+  }
+  .question{font-size:20px;font-weight:950;color:#243757;margin:0 0 12px}
+  label{display:block;font-size:15px;font-weight:900;margin:0 0 8px;color:#344054}
+  input,textarea{
+    width:100%;border:2px solid #cfd7e3;outline:none;border-radius:20px;
+    padding:17px;font-size:24px;color:#111827;background:#fff;
+  }
+  input:focus,textarea:focus{border-color:var(--primary);box-shadow:0 0 0 4px rgba(11,100,216,.14)}
+  textarea{min-height:135px;resize:vertical;font-size:18px;line-height:1.35}
+  .hint{margin:9px 0 0;color:#667085;font-size:14px;line-height:1.35}
+  .example{margin-top:10px;background:#fff7ed;color:#9a3412;border:1px solid #fed7aa;padding:12px;border-radius:16px;font-size:14px;font-weight:800;line-height:1.35}
+  .buttons{display:grid;grid-template-columns:1fr 1.45fr;gap:10px;margin-top:18px}
+  button{border:0;cursor:pointer;border-radius:19px;padding:17px 14px;font-size:18px;font-weight:950;transition:transform .08s ease,filter .15s ease}
+  button:active{transform:scale(.98)}
+  button:disabled{opacity:.45;cursor:not-allowed}
+  .btn-primary{background:linear-gradient(135deg,var(--primary),var(--primary2));color:#fff}
+  .btn-secondary{background:#f2f4f7;color:#344054;border:1px solid #d0d5dd}
+  .btn-green{background:linear-gradient(135deg,#22c55e,#15803d);color:#fff;width:100%;font-size:19px;padding:19px}
+  .hidden{display:none !important}
+  .done-title{font-size:29px;margin:0 0 8px;text-align:center}
+  .done-text{text-align:center;color:#475467;margin:0 0 16px;line-height:1.45}
+  .summary{background:#f8fafc;border:1px solid var(--line);border-radius:18px;padding:14px;margin:12px 0;color:#344054;font-size:14px;line-height:1.5}
+  .warn{margin-top:12px;color:#7c2d12;background:#ffedd5;border:1px solid #fed7aa;padding:10px;border-radius:14px;font-size:13px;line-height:1.35}
+  @media(max-width:430px){
+    body{padding:12px;align-items:flex-start}
+    .brand h1{font-size:22px}
+    .card{padding:18px;border-radius:24px;margin-top:6px}
+    .address{font-size:21px;padding:16px}
+    input{font-size:25px}
+    .buttons{grid-template-columns:1fr}
+  }
+</style>
+</head>
+<body>
+<div class="app">
+  <div class="brand">
+    <h1>🏍️ Costos de Envío Moto</h1>
+    <p>Formulario rápido para responder dirección por dirección</p>
+  </div>
+
+  <div class="card">
+    <div id="formScreen">
+      <div class="top">
+        <div class="pill" id="counter">Dirección 1/312</div>
+        <div class="save" id="saveState">Guardado automático activo</div>
+      </div>
+      <div class="bar"><div id="progressBar"></div></div>
+
+      <div class="section-label">📍 Dirección a consultar</div>
+      <div class="address" id="addressBox">Cargando dirección...</div>
+
+      <div id="costStep">
+        <p class="question">¿Cuánto se cobra para esta dirección?</p>
+        <label for="costInput">Costo a cobrar en Lempiras</label>
+        <input id="costInput" type="number" inputmode="numeric" min="0" placeholder="Ejemplo: 90" autocomplete="off">
+        <p class="hint">Escribe solo el número.</p>
+        <div class="buttons">
+          <button class="btn-secondary" id="backCostBtn" type="button">⬅️ Atrás</button>
+          <button class="btn-primary" id="nextCostBtn" type="button">Siguiente ➜</button>
+        </div>
+      </div>
+
+      <div id="commentStep" class="hidden">
+        <p class="question">¿Deseas agregar algún dato?</p>
+        <label for="commentInput">Comentario opcional</label>
+        <textarea id="commentInput" placeholder="Puedes dejarlo vacío si no hay nada que agregar..."></textarea>
+        <div class="example">Ejemplo: No se pasa del palo, no se pasa de calle principal.</div>
+        <div class="buttons">
+          <button class="btn-secondary" id="backCommentBtn" type="button">⬅️ Atrás</button>
+          <button class="btn-primary" id="saveCommentBtn" type="button">Guardar y seguir ➜</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="doneScreen" class="hidden">
+      <h2 class="done-title">✅ Todo terminado</h2>
+      <p class="done-text">Ya se respondieron todas las direcciones. Toca el botón para compartir el archivo TXT.</p>
+      <div class="summary" id="finalSummary"></div>
+      <button class="btn-green" id="shareBtn" type="button">📲 Compartir respuestas TXT</button>
+      <div class="warn">En algunos celulares se compartirá como archivo directamente. Si no lo permite, se descargará el TXT y se abrirá WhatsApp para enviarlo al número configurado.</div>
+    </div>
+  </div>
+</div>
+
+<script>
+const WHATSAPP_NUMBER = "50487902458";
+const STORAGE_KEY = "costos_envio_moto_entregador_v3_87902458";
+const SAVE_EVERY_MS = 2000;
+const DIRECCIONES = [
+  {
+    "direccion": "15 DE SEPTIEMBRE"
+  },
+  {
+    "direccion": "21 de febrero"
+  },
+  {
+    "direccion": "21 de octubre"
+  },
+  {
+    "direccion": "A la orilla del anillo en la nueva capital"
+  },
+  {
+    "direccion": "Academia Militar carretera a Lepaterique"
+  },
+  {
+    "direccion": "Al durazno salida al norte por la posta"
+  },
+  {
+    "direccion": "Aldea de Suyapa hasta la iglesia / posta"
+  },
+  {
+    "direccion": "Aldea La Cañada (por la UTH, a la par de Intercontinental School, empresa Tekcom)"
+  },
+  {
+    "direccion": "ALTOS DE LA GRANJA"
+  },
+  {
+    "direccion": "ALTOS DE LOARQUE (MIRADOR)"
+  },
+  {
+    "direccion": "Altos de Santa Rosa hasta el cruce / entrada"
+  },
+  {
+    "direccion": "ALTOS DE TONCONTIN"
+  },
+  {
+    "direccion": "AMERICA"
+  },
+  {
+    "direccion": "Aqui en el calffaa para mateo Después del campo parada martes"
+  },
+  {
+    "direccion": "Banco Davivienda oficina principal"
+  },
+  {
+    "direccion": "Barrio Abajo"
+  },
+  {
+    "direccion": "Barrio bella vista"
+  },
+  {
+    "direccion": "Barrio Buenos Aires calle principal frente a punto de taxi"
+  },
+  {
+    "direccion": "Barrio Casamata"
+  },
+  {
+    "direccion": "Barrio el chile solo calle principal se entrega"
+  },
+  {
+    "direccion": "Barrio el rincón Arriba de la alcaldía municipal pasando la tranca hay unas pulperías y ahí hay una placita. Mi casa está frente a la placita"
+  },
+  {
+    "direccion": "Barrio Guanacaste"
+  },
+  {
+    "direccion": "Barrio La Hoya antigua PC"
+  },
+  {
+    "direccion": "Barrio La Pagoda, antes de Plantas Tropicales del Boulevard Suyapa"
+  },
+  {
+    "direccion": "Barrio Perpetuo Socorro 12 calle Comayagüela por Transporte Congolón"
+  },
+  {
+    "direccion": "Barrio Perpetuo Socorro por Aguilar Paz"
+  },
+  {
+    "direccion": "Barrio San Rafael por el edificio rojo"
+  },
+  {
+    "direccion": "Barrio Villa Adela mercadito Quique"
+  },
+  {
+    "direccion": "Base de los Cobras en 21 de Octubre"
+  },
+  {
+    "direccion": "Bendeck Industrial segundo anillo frente a Prados Universitarios"
+  },
+  {
+    "direccion": "BLV JUAN PABLO SEGUNDO"
+  },
+  {
+    "direccion": "BO EL CENTRO"
+  },
+  {
+    "direccion": "BO LA BOLSA"
+  },
+  {
+    "direccion": "BO MORAZAN"
+  },
+  {
+    "direccion": "Bomberos del Carrizal"
+  },
+  {
+    "direccion": "Boulevard suyapa"
+  },
+  {
+    "direccion": "Breadco contiguo a Hertz Rent a Car / anillo periférico"
+  },
+  {
+    "direccion": "Brisas del Sol hasta La Mundial"
+  },
+  {
+    "direccion": "Brisas del valle calle principal"
+  },
+  {
+    "direccion": "Buenos Aires"
+  },
+  {
+    "direccion": "Calle frente a camosa entrada taller industrial y taller de motos"
+  },
+  {
+    "direccion": "Calle los alcaldes enfrente de la naval a la par macdell"
+  },
+  {
+    "direccion": "Campo Cielo calle principal"
+  },
+  {
+    "direccion": "Campo Parada Martes"
+  },
+  {
+    "direccion": "Carretera al Picacho adelante de Casa de Piedra"
+  },
+  {
+    "direccion": "Carrizal"
+  },
+  {
+    "direccion": "Carrizal salida al norte puente Bienvenido a Tegucigalpa"
+  },
+  {
+    "direccion": "Casa quinchón enfrente de finanza antes de parque La leona"
+  },
+  {
+    "direccion": "CASCADAS MALL"
+  },
+  {
+    "direccion": "Cementerio General de Las Casitas"
+  },
+  {
+    "direccion": "Centro comercial plaza Milenium"
+  },
+  {
+    "direccion": "Centro de salud Colonia Los Pinos"
+  },
+  {
+    "direccion": "Centro de Tegucigalpa, calle La Fuente, casa de esquina frente al parqueo"
+  },
+  {
+    "direccion": "Centro de Tegucigalpa por la catedral"
+  },
+  {
+    "direccion": "Centroamérica Este"
+  },
+  {
+    "direccion": "Centroamérica Oeste"
+  },
+  {
+    "direccion": "Cero grande hasta la zona 4"
+  },
+  {
+    "direccion": "Cerro grande zona 1"
+  },
+  {
+    "direccion": "Cerro Grande zona 2"
+  },
+  {
+    "direccion": "Cerro Grande zona 5"
+  },
+  {
+    "direccion": "Cerro Grande zona 8"
+  },
+  {
+    "direccion": "CITY MALL"
+  },
+  {
+    "direccion": "CIUDAD NUEVA"
+  },
+  {
+    "direccion": "Col. Argentina, dos cuadras antes de tienda de muebles Elements"
+  },
+  {
+    "direccion": "Coliseo de Ingenieros por Prados Universitarios"
+  },
+  {
+    "direccion": "Colonia 21 de octubre en codis"
+  },
+  {
+    "direccion": "Colonia 29 del anillo frente a Larach"
+  },
+  {
+    "direccion": "Colonia Álamo"
+  },
+  {
+    "direccion": "Colonia Alemán"
+  },
+  {
+    "direccion": "Colonia Arturo Quezada arriba de Maxi Despensa"
+  },
+  {
+    "direccion": "Colonia Arturo Quezada (calle principal)"
+  },
+  {
+    "direccion": "Colonia Brisas del Norte solo calle principal"
+  },
+  {
+    "direccion": "Colonia calpules"
+  },
+  {
+    "direccion": "Colonia Divanna (se llega hasta El Santa)"
+  },
+  {
+    "direccion": "Colonia El Country / LTH del Country"
+  },
+  {
+    "direccion": "Colonia El Porvenir cerca de Barrio El Chile / hasta el puente"
+  },
+  {
+    "direccion": "Colonia El Prado calle principal"
+  },
+  {
+    "direccion": "Colonia El Rosario abajo de Mall Premier"
+  },
+  {
+    "direccion": "Colonia El Sitio"
+  },
+  {
+    "direccion": "Colonia El Tablón, calle principal frente a la escuela"
+  },
+  {
+    "direccion": "Colonia Florencia, Edicio Plaza América, distribuidora san Rafael"
+  },
+  {
+    "direccion": "Colonia Humuya por el hospital Dime"
+  },
+  {
+    "direccion": "Colonia Iberia, calle principal, Solo se entrega en el puente"
+  },
+  {
+    "direccion": "Colonia Independencia solo calle principal"
+  },
+  {
+    "direccion": "Colonia Israel solo calle principal"
+  },
+  {
+    "direccion": "Colonia Izaguirre"
+  },
+  {
+    "direccion": "Colonia La Cañada calle principal por arenera"
+  },
+  {
+    "direccion": "Colonia La Era hasta Distrito Central"
+  },
+  {
+    "direccion": "Colonia La Esperanza final del Boulevard Morazán"
+  },
+  {
+    "direccion": "Colonia La Joya"
+  },
+  {
+    "direccion": "Colonia La Peña contiguo a pulpería La Bendición"
+  },
+  {
+    "direccion": "Colonia La Reforma, empresa Sumitec"
+  },
+  {
+    "direccion": "Colonia la rosa por citymall por antigua dipsa"
+  },
+  {
+    "direccion": "Colonia La Sosa solo calle principal"
+  },
+  {
+    "direccion": "COLONIA LA VEGA"
+  },
+  {
+    "direccion": "Colonia Las Ayestas calle principal"
+  },
+  {
+    "direccion": "Colonia Las Mercedes tercera entrada"
+  },
+  {
+    "direccion": "Colonia Las Palmas"
+  },
+  {
+    "direccion": "COLONIA LOARQUE"
+  },
+  {
+    "direccion": "Colonia Loma la Minita por la 21 de octubre"
+  },
+  {
+    "direccion": "Colonia Los Ángeles por Casamata"
+  },
+  {
+    "direccion": "Colonia Los Girasoles por la 21 de Octubre"
+  },
+  {
+    "direccion": "Colonia Los Llanos"
+  },
+  {
+    "direccion": "Colonia Los Pinos calle principal frente a Escuela Hermán Herrera Molina"
+  },
+  {
+    "direccion": "Colonia Los Pinos, calle principal, Los Panaderos Solo calle de la Honduras"
+  },
+  {
+    "direccion": "Colonia Los Profesores / iglesia La Cruz / tortillería Los Ángeles"
+  },
+  {
+    "direccion": "Colonia Melgar segundo puente calle principal colonia Smith"
+  },
+  {
+    "direccion": "Colonia Millenium Sur"
+  },
+  {
+    "direccion": "Colonia Miraflores por iglesia católica (mercadito Cristian Diego)"
+  },
+  {
+    "direccion": "Colonia Miramontes"
+  },
+  {
+    "direccion": "Colonia modesto rodas #2 atrás de la escuela Fuerzas Armadas"
+  },
+  {
+    "direccion": "Colonia Montes de Bendición entrada mano izquierda Maxi Despensa"
+  },
+  {
+    "direccion": "Colonia Nueva australia en la quezada en reposteria grano de oro"
+  },
+  {
+    "direccion": "Colonia nueva Danlí solo orilla de anillo"
+  },
+  {
+    "direccion": "Colonia nueva esperanza calle principal esquina opuesta d colegio modelo por tiloarque a la par de posta de policía"
+  },
+  {
+    "direccion": "Colonia Nueva Galilea hasta Maxi Despensa Quezada"
+  },
+  {
+    "direccion": "Colonia Nueva Jerusalén primera entrada Pollos La Antorcha"
+  },
+  {
+    "direccion": "Colonia Nueva Suyapa"
+  },
+  {
+    "direccion": "Colonia Policarpo Paz"
+  },
+  {
+    "direccion": "Colonia Popular calle principal"
+  },
+  {
+    "direccion": "Colonia Primero de Diciembre"
+  },
+  {
+    "direccion": "Colonia Quezada"
+  },
+  {
+    "direccion": "Colonia Ramón Amaya Amador calle principal"
+  },
+  {
+    "direccion": "Colonia San Ángel"
+  },
+  {
+    "direccion": "Colonia San Buenaventura / Colegio Superación San Francisco"
+  },
+  {
+    "direccion": "Colonia San Francisco solo calle principal"
+  },
+  {
+    "direccion": "Colonia San José de la peña media cuadra antes de la posta policial"
+  },
+  {
+    "direccion": "Colonia San José de la Vega calle principal frente a Cinco Estrellas / Abarrotería La Bodeguita"
+  },
+  {
+    "direccion": "Colonia San Martín hasta Las Mercedes"
+  },
+  {
+    "direccion": "Colonia Santa Fe calle principal contiguo al punto de taxis"
+  },
+  {
+    "direccion": "Colonia Santa María"
+  },
+  {
+    "direccion": "Colonia Santa María bloque 9C dos bloques después de iglesia mormona"
+  },
+  {
+    "direccion": "COLONIA SATELITE"
+  },
+  {
+    "direccion": "Colonia Tepeyac, Espresso Americano a la par de Canal 36"
+  },
+  {
+    "direccion": "Colonia Tepeyac por COHEP"
+  },
+  {
+    "direccion": "Colonia travesía en el palo"
+  },
+  {
+    "direccion": "Colonia Unidad y Fuerza (punto de mototaxis de la Australia, calle principal)"
+  },
+  {
+    "direccion": "Colonia Venezuela sector A calle principal"
+  },
+  {
+    "direccion": "Colonia Villa Los Ciruelos por 28 de Marzo (calle principal)"
+  },
+  {
+    "direccion": "Colonia Villa Los Laureles"
+  },
+  {
+    "direccion": "Colonia Villa Los Laureles (primera entrada)"
+  },
+  {
+    "direccion": "Colonia villa nueva sector la rampla solo orila calle principal"
+  },
+  {
+    "direccion": "Colonia Villanueva carretera a Danlí (calle principal o 7 cuadras arriba de Villa de Sol)"
+  },
+  {
+    "direccion": "Colonia Villanueva en el puente peatonal de la honduras"
+  },
+  {
+    "direccion": "Colonia villeda Morales"
+  },
+  {
+    "direccion": "Comayagüela, Centro Comunal de Las Mercedes (a la par del kínder de Las Mercedes)"
+  },
+  {
+    "direccion": "Complejo caprisa calle principal"
+  },
+  {
+    "direccion": "Complejo de la Policía Militar en Las Pozas"
+  },
+  {
+    "direccion": "Complejo policial San Miguel por el puente El Dólar"
+  },
+  {
+    "direccion": "Complejo Río lindo la Vega"
+  },
+  {
+    "direccion": "Conatel"
+  },
+  {
+    "direccion": "Condominios Lomas del Country por colegio San Francisco / Bombas SANAA"
+  },
+  {
+    "direccion": "Denny's de Toncontín"
+  },
+  {
+    "direccion": "Destacamento militar represa Los Laureles"
+  },
+  {
+    "direccion": "Desvío de aldea Santa Rosa"
+  },
+  {
+    "direccion": "Detrás de Banco Central por chiminique"
+  },
+  {
+    "direccion": "Divino paraiso se entrega a orilla del anillo"
+  },
+  {
+    "direccion": "DPI Kennedy primera entrada"
+  },
+  {
+    "direccion": "ECOVIVIENDA"
+  },
+  {
+    "direccion": "Edificio Artemisa"
+  },
+  {
+    "direccion": "Edificio rosental en miramontes"
+  },
+  {
+    "direccion": "Edificio SONISA Paseo Tres Caminos / Seguros Atlántida"
+  },
+  {
+    "direccion": "EL ALAMO"
+  },
+  {
+    "direccion": "El divino paraíso solo en el anillo"
+  },
+  {
+    "direccion": "El Edén Comayagüela calle principal a Los Laureles"
+  },
+  {
+    "direccion": "El hato"
+  },
+  {
+    "direccion": "EL HOGAR"
+  },
+  {
+    "direccion": "El Manchén"
+  },
+  {
+    "direccion": "EL PRADO"
+  },
+  {
+    "direccion": "EL SAUCE"
+  },
+  {
+    "direccion": "El trapiche"
+  },
+  {
+    "direccion": "En la divino paraíso (solo a orilla del anillo)"
+  },
+  {
+    "direccion": "Entrada de la colonia 3 de Mayo solo en entrada"
+  },
+  {
+    "direccion": "Escuela Técnica del Ejército frente al Cuartel General"
+  },
+  {
+    "direccion": "Facultad de ciencias medicas en miramontes"
+  },
+  {
+    "direccion": "Flor del Campo por colegio Saúl Zelaya Jiménez"
+  },
+  {
+    "direccion": "Frente a cuarta estación policial del belen"
+  },
+  {
+    "direccion": "Fuerza Aérea"
+  },
+  {
+    "direccion": "Gasolinera Puma de germania"
+  },
+  {
+    "direccion": "Gasolinera Puma frente a Iglesia Guadalupe / Banco Occidente / ACOSA Bulevar Morazán"
+  },
+  {
+    "direccion": "Gasolinera Puma frente al hospital San Felipe"
+  },
+  {
+    "direccion": "Gasolinera Shell de Loarque"
+  },
+  {
+    "direccion": "Gasolinera shell del anillo en loarque"
+  },
+  {
+    "direccion": "Gasolinera Texaco del cruce de Mateo"
+  },
+  {
+    "direccion": "Gasolinera Texaco en el desvío a Mateo"
+  },
+  {
+    "direccion": "Gasolinera Texaco salida a Danlí"
+  },
+  {
+    "direccion": "Guanacaste"
+  },
+  {
+    "direccion": "Hato de En Medio (cualquier sector)"
+  },
+  {
+    "direccion": "Hato de enmedio"
+  },
+  {
+    "direccion": "Honduras maya"
+  },
+  {
+    "direccion": "Hospital escuela"
+  },
+  {
+    "direccion": "Hospital Escuela portón 1"
+  },
+  {
+    "direccion": "Hospital Militar"
+  },
+  {
+    "direccion": "hospital San Jorge"
+  },
+  {
+    "direccion": "Hotel Clarion"
+  },
+  {
+    "direccion": "Hotel Honduras 3 en 7ma avenida"
+  },
+  {
+    "direccion": "Iglesia Casa de Dios Puerta al Cielo"
+  },
+  {
+    "direccion": "Industrial de Alimentos EYL"
+  },
+  {
+    "direccion": "Kennedy primera entrada"
+  },
+  {
+    "direccion": "Kínder Saúl Zelaya calle principal de La Sosa"
+  },
+  {
+    "direccion": "LA ALAMEDA"
+  },
+  {
+    "direccion": "LA ARBOLEDA"
+  },
+  {
+    "direccion": "La campaña"
+  },
+  {
+    "direccion": "La cañada"
+  },
+  {
+    "direccion": "LA CATOLICA"
+  },
+  {
+    "direccion": "LA CONCEPCION"
+  },
+  {
+    "direccion": "LA FLORENCIA"
+  },
+  {
+    "direccion": "LA GODOY"
+  },
+  {
+    "direccion": "LA GRANJA"
+  },
+  {
+    "direccion": "La granja por el juzgado"
+  },
+  {
+    "direccion": "LA HUMUYA"
+  },
+  {
+    "direccion": "La ronda"
+  },
+  {
+    "direccion": "La ulloa solo orilla del anillo"
+  },
+  {
+    "direccion": "Las Torres Diprova"
+  },
+  {
+    "direccion": "LAS UVAS"
+  },
+  {
+    "direccion": "Llantera Las Casitas"
+  },
+  {
+    "direccion": "Loarque Río Grande Sur"
+  },
+  {
+    "direccion": "Lomas de San José 1 etapa por Las Palmas / Texaco Kennedy"
+  },
+  {
+    "direccion": "Lomas del guijarro"
+  },
+  {
+    "direccion": "Lomas del Guijarro por el Sagrado Corazón"
+  },
+  {
+    "direccion": "Lomas del Guijarro Sur"
+  },
+  {
+    "direccion": "Lomas del Mayab"
+  },
+  {
+    "direccion": "LOS HIDALGOS"
+  },
+  {
+    "direccion": "Mall El Dorado"
+  },
+  {
+    "direccion": "Más abajito del mall premiere por la Polo en el desvío"
+  },
+  {
+    "direccion": "Maxi despensa de la Kennedy"
+  },
+  {
+    "direccion": "Mayoreo tienda El Pacífico"
+  },
+  {
+    "direccion": "Megalarach y Cía Miramontes"
+  },
+  {
+    "direccion": "Mercado jacaleapa"
+  },
+  {
+    "direccion": "Metromall"
+  },
+  {
+    "direccion": "Moll premier"
+  },
+  {
+    "direccion": "Motores Hino de Honduras (cerca de Ecoplaza, puente de la Villa Olímpica, a la par de Decora)"
+  },
+  {
+    "direccion": "Novacentro"
+  },
+  {
+    "direccion": "Nueva capital (hasta el anillo orilla)"
+  },
+  {
+    "direccion": "Palo de hule en el puente"
+  },
+  {
+    "direccion": "Parada de buses Colonia Mary de Flores (orilla del anillo)"
+  },
+  {
+    "direccion": "Parada de buses La Quezada / Clínica Azul / Cuerpo de Cristo"
+  },
+  {
+    "direccion": "Pasaje San Miguel sexta avenida Comayagüela"
+  },
+  {
+    "direccion": "Paseo Los Próceres frente a Hotel Hyatt Place / Diunsa Próceres"
+  },
+  {
+    "direccion": "Pedragalito"
+  },
+  {
+    "direccion": "Pedregal"
+  },
+  {
+    "direccion": "Pepetos Bella Vista"
+  },
+  {
+    "direccion": "Plantas Tropicales"
+  },
+  {
+    "direccion": "Plaza ciudad Nueva por calle los alcaldes"
+  },
+  {
+    "direccion": "Plaza la norteña"
+  },
+  {
+    "direccion": "Plaza Lara por Próceres"
+  },
+  {
+    "direccion": "Plaza Loarque"
+  },
+  {
+    "direccion": "Plaza Loarque (Gallo Más Gallo)"
+  },
+  {
+    "direccion": "Plaza Macuelizo / Torre San Carlos"
+  },
+  {
+    "direccion": "Plaza miraflores"
+  },
+  {
+    "direccion": "Plaza Perisur adelante de Camosa"
+  },
+  {
+    "direccion": "Plaza portal del bosque Frente a restaurante IL Padrino"
+  },
+  {
+    "direccion": "Portal de Viera"
+  },
+  {
+    "direccion": "Posta Villa Vieja"
+  },
+  {
+    "direccion": "Predregalito BO del norte"
+  },
+  {
+    "direccion": "Primer Batallón de Infantería en Mateo a la par de COPECO"
+  },
+  {
+    "direccion": "Puente El Chile"
+  },
+  {
+    "direccion": "Punto mototaxi adelante del Motel Villa Nueva"
+  },
+  {
+    "direccion": "Ransa anillo periférico por pricemart del sauce"
+  },
+  {
+    "direccion": "Registro Nacional"
+  },
+  {
+    "direccion": "Reparto Abajo una cuadra arriba de Mercado San Pablo"
+  },
+  {
+    "direccion": "Residencial Bella Oriente sector 8B"
+  },
+  {
+    "direccion": "Residencial bosques del tablón"
+  },
+  {
+    "direccion": "Residencial Centro America 4 etapa bloque 79"
+  },
+  {
+    "direccion": "Residencial Centroamérica este"
+  },
+  {
+    "direccion": "Residencial El Dorado"
+  },
+  {
+    "direccion": "Residencial El Molinón"
+  },
+  {
+    "direccion": "Residencial El Sauce"
+  },
+  {
+    "direccion": "Residencial El Tablón"
+  },
+  {
+    "direccion": "Residencial Francisco morazán"
+  },
+  {
+    "direccion": "Residencial Granada por Pedregalito"
+  },
+  {
+    "direccion": "Residencial Honduras"
+  },
+  {
+    "direccion": "Residencial La Cañada"
+  },
+  {
+    "direccion": "Residencial Lomas de Germanía"
+  },
+  {
+    "direccion": "Residencial Lomas de María Auxiliadora"
+  },
+  {
+    "direccion": "Residencial Los Eucaliptos"
+  },
+  {
+    "direccion": "Residencial Monte Fresco por el puentón de Colonia El Edén"
+  },
+  {
+    "direccion": "Residencial Monte Verde"
+  },
+  {
+    "direccion": "Residencial Palma Real"
+  },
+  {
+    "direccion": "Residencial paseo las campanas arriba de la unitec"
+  },
+  {
+    "direccion": "Residencial plaza"
+  },
+  {
+    "direccion": "Residencial Roble Oeste"
+  },
+  {
+    "direccion": "Residencial San Juan"
+  },
+  {
+    "direccion": "Residencial San Juan frente a Colonia Bella Oriente"
+  },
+  {
+    "direccion": "Residencial Santa María"
+  },
+  {
+    "direccion": "Residencial Vegas del Country"
+  },
+  {
+    "direccion": "Residencial Villas de Oriente"
+  },
+  {
+    "direccion": "Sagastume 2 (hasta parque Concordia)"
+  },
+  {
+    "direccion": "SAN IGNACIO"
+  },
+  {
+    "direccion": "San Miguel"
+  },
+  {
+    "direccion": "SAN SEBASTIAN"
+  },
+  {
+    "direccion": "Secretaría de Seguridad, carretera a Mateo"
+  },
+  {
+    "direccion": "Sector el sauce por pricesmart"
+  },
+  {
+    "direccion": "Segunda Avenida de Comayagüela esquina opuesta al Puente Mallol / Palo de Hule"
+  },
+  {
+    "direccion": "Segunda Avenida de Comayagüela / Palacio de las Chumpas"
+  },
+  {
+    "direccion": "Shell del Anillo donde está Pizza Hut"
+  },
+  {
+    "direccion": "Supermercado La Colonia #1"
+  },
+  {
+    "direccion": "Supermercado Villas del Sol"
+  },
+  {
+    "direccion": "Sushilab de la colonia América"
+  },
+  {
+    "direccion": "Suyapa solo abajo calle principal"
+  },
+  {
+    "direccion": "Teatro Manuel Bonilla"
+  },
+  {
+    "direccion": "Tecnicentro La Bendición frente a Ecoplaza"
+  },
+  {
+    "direccion": "Terminal de buses Nueva Suyapa hasta AGAFAM"
+  },
+  {
+    "direccion": "Texaco Cerro Grande antes de zona 8"
+  },
+  {
+    "direccion": "Texaco Santa Lucía"
+  },
+  {
+    "direccion": "Tizatillo solo calle principal por la posta"
+  },
+  {
+    "direccion": "Torocagua"
+  },
+  {
+    "direccion": "UNITEC"
+  },
+  {
+    "direccion": "Universidad Pedagogica"
+  },
+  {
+    "direccion": "VENECIA"
+  },
+  {
+    "direccion": "Villa Centroamericana frente al Chochi Sosa"
+  },
+  {
+    "direccion": "Villa olímpica"
+  }
+];
+
+let state = {
+  index: 0,
+  mode: "cost",
+  answers: DIRECCIONES.map(item => ({ direccion: item.direccion, costo: "", comentario: "" })),
+  updatedAt: null
+};
+
+const $ = id => document.getElementById(id);
+const formScreen = $("formScreen");
+const doneScreen = $("doneScreen");
+const counter = $("counter");
+const saveState = $("saveState");
+const progressBar = $("progressBar");
+const addressBox = $("addressBox");
+const costStep = $("costStep");
+const commentStep = $("commentStep");
+const costInput = $("costInput");
+const commentInput = $("commentInput");
+const backCostBtn = $("backCostBtn");
+
+function normalize(text) {
+  return String(text || "")
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[̀-ͯ]/g, "")
+    .replace(/[^a-z0-9]+/g, " ")
+    .trim();
+}
+
+function loadState() {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (!raw) return;
+    const saved = JSON.parse(raw);
+    if (!saved || !Array.isArray(saved.answers)) return;
+    const savedMap = new Map(saved.answers.map(a => [normalize(a.direccion), a]));
+    state.answers = DIRECCIONES.map(item => {
+      const prev = savedMap.get(normalize(item.direccion));
+      return {
+        direccion: item.direccion,
+        costo: prev && prev.costo ? String(prev.costo) : "",
+        comentario: prev && prev.comentario ? String(prev.comentario) : ""
+      };
+    });
+    state.index = Math.max(0, Math.min(Number(saved.index) || 0, DIRECCIONES.length));
+    state.mode = saved.mode === "comment" ? "comment" : "cost";
+    state.updatedAt = saved.updatedAt || null;
+  } catch(e) {}
+}
+
+function persist(showFlash = false) {
+  state.updatedAt = new Date().toISOString();
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+  if (showFlash) flashSaved();
+}
+
+function flashSaved() {
+  saveState.textContent = "✅ Guardado";
+  setTimeout(() => saveState.textContent = "Guardado automático activo", 900);
+}
+
+setInterval(() => persist(false), SAVE_EVERY_MS);
+
+function currentAnswer() {
+  return state.answers[state.index];
+}
+
+function render() {
+  if (state.index >= DIRECCIONES.length) {
+    showDone();
+    return;
+  }
+
+  formScreen.classList.remove("hidden");
+  doneScreen.classList.add("hidden");
+
+  const total = DIRECCIONES.length;
+  const num = state.index + 1;
+  const ans = currentAnswer();
+  const completed = state.answers.filter(a => String(a.costo || "").trim()).length;
+
+  counter.textContent = `Dirección ${num}/${total}`;
+  progressBar.style.width = `${Math.round((completed / total) * 100)}%`;
+  addressBox.textContent = ans.direccion || "Dirección no disponible";
+  costInput.value = ans.costo || "";
+  commentInput.value = ans.comentario || "";
+  backCostBtn.disabled = state.index === 0;
+
+  if (state.mode === "cost") {
+    costStep.classList.remove("hidden");
+    commentStep.classList.add("hidden");
+    setTimeout(() => costInput.focus(), 80);
+  } else {
+    costStep.classList.add("hidden");
+    commentStep.classList.remove("hidden");
+    setTimeout(() => commentInput.focus(), 80);
+  }
+
+  persist(false);
+}
+
+function nextCost() {
+  const value = costInput.value.trim();
+  if (!value) {
+    alert("Primero escribe el costo de esta dirección.");
+    costInput.focus();
+    return;
+  }
+  currentAnswer().costo = value;
+  state.mode = "comment";
+  persist(true);
+  render();
+}
+
+function saveCommentAndNext() {
+  currentAnswer().comentario = commentInput.value.trim();
+  state.index++;
+  state.mode = "cost";
+  persist(true);
+  render();
+}
+
+function backFromCost() {
+  if (state.index <= 0) return;
+  state.index--;
+  state.mode = "comment";
+  persist(true);
+  render();
+}
+
+function backFromComment() {
+  state.mode = "cost";
+  persist(true);
+  render();
+}
+
+function showDone() {
+  formScreen.classList.add("hidden");
+  doneScreen.classList.remove("hidden");
+  const answered = state.answers.filter(a => String(a.costo || "").trim()).length;
+  const comments = state.answers.filter(a => String(a.comentario || "").trim()).length;
+  $("finalSummary").innerHTML = `
+    <b>Total direcciones:</b> ${DIRECCIONES.length}<br>
+    <b>Con costo respondido:</b> ${answered}<br>
+    <b>Con comentario:</b> ${comments}<br>
+    <b>Último guardado:</b> ${new Date().toLocaleString("es-HN")}
+  `;
+  persist(false);
+}
+
+function buildTxt() {
+  const now = new Date();
+  const lines = [];
+  lines.push("RESPUESTAS COSTOS DE ENVÍO MOTO");
+  lines.push("Fecha: " + now.toLocaleString("es-HN"));
+  lines.push("Total direcciones: " + DIRECCIONES.length);
+  lines.push("========================================");
+  lines.push("");
+  state.answers.forEach((a, i) => {
+    lines.push(`${i + 1}. ${a.direccion}`);
+    lines.push(`Costo: ${a.costo ? "L. " + a.costo : "SIN RESPONDER"}`);
+    if (a.comentario) lines.push(`Comentario: ${a.comentario}`);
+    lines.push("----------------------------------------");
+  });
+  return lines.join("
+");
+}
+
+function downloadTxt(txt) {
+  const blob = new Blob([txt], { type: "text/plain;charset=utf-8" });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  const stamp = new Date().toISOString().slice(0,19).replace(/[:T]/g,"-");
+  a.href = url;
+  a.download = `respuestas-costos-envio-moto-${stamp}.txt`;
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  setTimeout(() => URL.revokeObjectURL(url), 1200);
+}
+
+async function shareTxt() {
+  const txt = buildTxt();
+  const stamp = new Date().toISOString().slice(0,19).replace(/[:T]/g,"-");
+  const filename = `respuestas-costos-envio-moto-${stamp}.txt`;
+  const blob = new Blob([txt], { type: "text/plain;charset=utf-8" });
+  const file = new File([blob], filename, { type: "text/plain" });
+
+  try {
+    if (navigator.canShare && navigator.canShare({ files: [file] })) {
+      await navigator.share({
+        title: "Respuestas costos de envío moto",
+        text: "TXT con respuestas de costos de envío.",
+        files: [file]
+      });
+      return;
+    }
+  } catch(e) {}
+
+  downloadTxt(txt);
+  const msg = encodeURIComponent("Hola, ya terminé de responder los costos de envío. Se descargó el archivo TXT para enviártelo por aquí.");
+  window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${msg}`, "_blank");
+}
+
+costInput.addEventListener("input", () => {
+  if (state.index < state.answers.length) currentAnswer().costo = costInput.value.trim();
+  persist(false);
+});
+commentInput.addEventListener("input", () => {
+  if (state.index < state.answers.length) currentAnswer().comentario = commentInput.value.trim();
+  persist(false);
+});
+costInput.addEventListener("keydown", e => { if (e.key === "Enter") nextCost(); });
+commentInput.addEventListener("keydown", e => { if (e.key === "Enter" && (e.ctrlKey || e.metaKey)) saveCommentAndNext(); });
+
+$("nextCostBtn").addEventListener("click", nextCost);
+$("saveCommentBtn").addEventListener("click", saveCommentAndNext);
+$("backCostBtn").addEventListener("click", backFromCost);
+$("backCommentBtn").addEventListener("click", backFromComment);
+$("shareBtn").addEventListener("click", shareTxt);
+
+loadState();
+render();
+</script>
+</body>
+</html>
